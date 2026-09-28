@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KI-Tag-Generator</title>
+<meta name="description" content="Rahmenbedingungen eines pädagogischen KI-Tags eingeben und das komplette Material erzeugen: Ablaufplan, Aufträge, Vorträge, Teilnehmer-Website.">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="app.css?v=1">
+</head>
+<body>
+<a class="skip" href="#form">Zum Formular</a>
+<header class="top">
+  <div class="wrap top-in">
+    <div class="brand"><b>KI-Tag-Generator</b><small>Pädagogischer Tag zu KI: vormittags mit der Klasse, nachmittags für die eigene Arbeit</small></div>
+    <div class="top-actions">
+      <button type="button" class="btn ghost" id="beispiel">Beispiel laden</button>
+      <button type="button" class="btn ghost" id="export">Einstellungen sichern</button>
+      <label class="btn ghost file">Einstellungen laden<input type="file" id="import" accept=".json,application/json"></label>
+    </div>
+  </div>
+</header>
+
+<main class="wrap layout">
+<form id="form" autocomplete="off">
+  <p class="intro">Tragt die Rahmenbedingungen ein. Zeitplan und Logistik rechnen sich sofort mit, darunter entsteht das Material. Alles bleibt in diesem Browser, nichts wird verschickt.</p>
+
+  <fieldset>
+    <legend><span class="n">1</span>Rahmen</legend>
+    <div class="grid2">
+      <label>Schule<input name="schule" placeholder="z. B. Gymnasium Musterstadt"></label>
+      <label>Datum<input type="date" name="datum"></label>
+      <label>Moderation / Team<input name="team" placeholder="z. B. Medienberatung Rhein-Berg"></label>
+      <label>Kontakt (für Impressum)<input name="kontakt" placeholder="Dienstanschrift, E-Mail"></label>
+      <label>Bundesland
+        <select name="bundesland"><option value="NRW">Nordrhein-Westfalen</option><option value="anderes">anderes Bundesland</option></select>
+      </label>
+      <label>Link zum Sammel-Board <small>(optional)</small><input name="board" type="url" placeholder="https://…"></label>
+    </div>
+    <div class="farben" role="radiogroup" aria-label="Akzentfarbe">
+      <span class="lbl">Farbe des Materials</span>
+      <label class="sw"><input type="radio" name="akzent" value="#1a6b47"><i style="--c:#1a6b47"></i><span>Grün</span></label>
+      <label class="sw"><input type="radio" name="akzent" value="#1d5a8c"><i style="--c:#1d5a8c"></i><span>Blau</span></label>
+      <label class="sw"><input type="radio" name="akzent" value="#0f6b72"><i style="--c:#0f6b72"></i><span>Petrol</span></label>
+      <label class="sw"><input type="radio" name="akzent" value="#5b3f8c"><i style="--c:#5b3f8c"></i><span>Violett</span></label>
+      <label class="sw"><input type="radio" name="akzent" value="#8a3b2a"><i style="--c:#8a3b2a"></i><span>Rotbraun</span></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend><span class="n">2</span>Zeit</legend>
+    <div class="grid3">
+      <label>Beginn<input type="time" name="start" step="300"></label>
+      <label>Ende<input type="time" name="ende" step="300"></label>
+      <label>Mittagspause
+        <select name="mittag"><option value="0">keine</option><option value="30">30 Min</option><option value="45">45 Min</option><option value="60">60 Min</option><option value="75">75 Min</option><option value="90">90 Min</option></select>
+      </label>
+    </div>
+    <div class="presets"><span class="lbl">Schnellwahl</span>
+      <button type="button" class="chip" data-zeit="08:30,16:00,60">Ganztag 08:30–16:00</button>
+      <button type="button" class="chip" data-zeit="08:00,14:30,45">Früh 08:00–14:30</button>
+      <button type="button" class="chip" data-zeit="09:00,14:00,30">Kompakt 09:00–14:00</button>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend><span class="n">3</span>Kollegium</legend>
+    <div class="grid3">
+      <label>Teilnehmende<input type="number" name="tn" min="4" max="250" step="1"></label>
+      <label>Personen in der Moderation<input type="number" name="mods" min="1" max="20" step="1"></label>
+    </div>
+    <div class="opts" role="radiogroup" aria-label="Vorkenntnisse">
+      <span class="lbl">Vorkenntnisse mit KI</span>
+      <label class="opt"><input type="radio" name="niveau" value="einstieg"><span><b>Einsteiger</b><small>die meisten haben KI kaum genutzt</small></span></label>
+      <label class="opt"><input type="radio" name="niveau" value="gemischt"><span><b>Gemischt</b><small>einige nutzen KI regelmäßig</small></span></label>
+      <label class="opt"><input type="radio" name="niveau" value="erfahren"><span><b>Erfahren</b><small>Chatbots sind Alltag</small></span></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend><span class="n">4</span>Vormittag: KI mit der Klasse</legend>
+    <div class="opts" role="radiogroup" aria-label="Plattform">
+      <span class="lbl">Plattform für die Lernenden</span>
+      <label class="opt"><input type="radio" name="plattform" value="fobizz"><span><b>fobizz</b><small>Klassenräume mit Zugangscodes, eigene KI-Assistenten</small></span></label>
+      <label class="opt"><input type="radio" name="plattform" value="ais"><span><b>AIS.chat</b><small>Schul-Chatbot der Länder, Dialogpartner per Link oder QR-Code</small></span></label>
+      <label class="opt"><input type="radio" name="plattform" value="andere"><span><b>andere</b><small>eine von der Schule freigegebene Plattform</small></span></label>
+    </div>
+    <label class="nurandere">Name der Plattform<input name="plattformFrei" placeholder="z. B. telli, SchulKI"></label>
+    <div class="opts multi">
+      <span class="lbl">Arbeitsformen <small>(mindestens eine; mehrere heißt: die Gruppen wählen)</small></span>
+      <label class="opt"><input type="checkbox" name="formen" value="pingpong"><span><b>KI-Ping-Pong</b><small>schreiben, Feedback, überarbeiten</small></span></label>
+      <label class="opt"><input type="checkbox" name="formen" value="tutor"><span><b>Sokratischer Tutor</b><small>hilft beim Lösen nur mit Fragen</small></span></label>
+      <label class="opt"><input type="checkbox" name="formen" value="rollenspiel"><span><b>Dialogpartner</b><small>Figur, Zeitzeugin, Fremdsprache</small></span></label>
+      <label class="opt"><input type="checkbox" name="formen" value="debatte"><span><b>Streitpartner</b><small>vertritt die Gegenposition</small></span></label>
+      <label class="opt"><input type="checkbox" name="formen" value="uebung"><span><b>Übungspartner</b><small>fragt ab, passt das Niveau an</small></span></label>
+    </div>
+  </fieldset>
+
+  <fieldset>
+    <legend><span class="n">5</span>Nachmittag: KI für die eigene Arbeit</legend>
+    <div class="opts multi">
+      <span class="lbl">Werkzeuge <small>(mindestens eines)</small></span>
+      <label class="opt"><input type="checkbox" name="werkzeuge" value="gemini"><span><b>Gemini</b><small>Google · Canvas und Gemini Notebook, kostenlos</small></span></label>
+      <label class="opt"><input type="checkbox" name="werkzeuge" value="claude"><span><b>Claude</b><small>Anthropic · Artefakte und Projekte im Chat</small></span></label>
+      <label class="opt"><input type="checkbox" name="werkzeuge" value="chatgpt"><span><b>ChatGPT</b><small>OpenAI · Canvas und Projekte im Chat</small></span></label>
+      <label class="opt agent"><input type="checkbox" name="werkzeuge" value="claudecode"><span><b>Claude Code</b><small>Agent · Abo und Installation nötig</small></span></label>
+      <label class="opt agent"><input type="checkbox" name="werkzeuge" value="codex"><span><b>Codex</b><small>Agent · Abo und Installation nötig</small></span></label>
+    </div>
+    <div class="opts multi">
+      <span class="lbl">Wege zum Material <small>(werden zu Weg A, B, C …)</small></span>
+      <label class="opt"><input type="checkbox" name="wege" value="interaktiv"><span><b>Interaktives Arbeitsblatt</b><small>Klapp-Lösungen, Eingabefelder, Quiz</small></span></label>
+      <label class="opt"><input type="checkbox" name="wege" value="erwartung"><span><b>Erwartungshorizont</b><small>Kriterien diktieren, KI formuliert</small></span></label>
+      <label class="opt"><input type="checkbox" name="wege" value="umbauen"><span><b>Material aus Quellen umbauen</b><small>Struktur, Glossar, Fragenkatalog</small></span></label>
+      <label class="opt"><input type="checkbox" name="wege" value="differenzieren"><span><b>Differenzieren</b><small>Niveaustufen, einfache Sprache</small></span></label>
+      <label class="opt" id="weg-paket"><input type="checkbox" name="wege" value="paket"><span><b>Komplettes Stundenpaket</b><small>nur mit Agent: mehrere Dateien auf einmal</small></span></label>
+    </div>
+  </fieldset>
+</form>
+
+<aside class="side" aria-label="Zeitplan und Logistik">
+  <div class="panel">
+    <h2>Zeitplan</h2>
+    <div id="zeitplan"></div>
+    <h2>Logistik</h2>
+    <dl id="logistik" class="zahlen"></dl>
+    <div id="hinweise"></div>
+  </div>
+</aside>
+</main>
+
+<section class="wrap material" id="material" aria-labelledby="mat-h">
+  <div class="mat-kopf">
+    <h2 id="mat-h">Das Material</h2>
+    <button type="button" class="btn big" id="zip">Komplettpaket als ZIP</button>
+  </div>
+  <p class="mat-lead" id="mat-lead"></p>
+  <div id="liste" class="liste"></div>
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+</section>
+
+<dialog id="vorschau" aria-labelledby="vs-titel">
+  <div class="vs-kopf"><b id="vs-titel">Vorschau</b><div class="vs-akt"><button type="button" class="btn" id="vs-dl">Herunterladen</button><button type="button" class="btn ghost" id="vs-zu">Schließen</button></div></div>
+  <iframe id="vs-frame" title="Vorschau des Dokuments"></iframe>
+</dialog>
+
+<footer class="wrap fuss">
+  Inhalte nach dem Master-Paket KI-Tag, Stand September 2026. Oberflächen von fobizz, AIS.chat, Gemini, Claude und ChatGPT ändern sich schnell: vor jedem Termin einmal selbst durchklicken.
+  Bibliotheken: docx (MIT), JSZip (MIT). Schriften: Barlow, IBM Plex Sans (SIL OFL).
+</footer>
+
+<script src="vendor/docx.umd.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script src="js/data.js?v=1"></script>
+<script src="js/plan.js?v=1"></script>
+<script src="js/docs.js?v=1"></script>
+<script src="js/art.js?v=1"></script>
+<script src="js/decks.js?v=1"></script>
+<script src="js/render.js?v=1"></script>
+<script src="js/app.js?v=1"></script>
+</body>
+</html>
